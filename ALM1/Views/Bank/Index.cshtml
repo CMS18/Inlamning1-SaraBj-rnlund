@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Transaktion";
+}
+
+<h1>Skapa transaktion</h1>
+
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @Html.Raw(TempData["success"])
+    </div>
+}
+else if (TempData["failed"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @Html.Raw(TempData["failed"])
+    </div>
+}
+
+<form asp-controller="Bank" asp-action="Deposit" method="post">
+    <input type="number" name="accountId" placeholder="Kontonummer" />
+    <input type="number" name="amount" placeholder="Belopp" />
+    <button type="submit">Insättning</button>
+</form>
+
+<form asp-controller="Bank" asp-action="Withdrawl" method="post">
+    <input type="number" name="accountId" placeholder="Kontonummer" />
+    <input type="number" name="amount" placeholder="Belopp" />
+    <button type="submit">Uttag</button>
+</form>
+
+
+

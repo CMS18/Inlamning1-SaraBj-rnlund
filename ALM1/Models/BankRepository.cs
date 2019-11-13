@@ -53,5 +53,26 @@ namespace ALM1.Models
         {
             return Customers;
         }
+
+        public string Deposit(int accountId, decimal balance)
+        {
+            string message = "Insättning check!";
+            var account = Customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == accountId);
+
+            if(account == null)
+            {
+                message = "Kontot finns inte!";
+                return message;
+            }
+            else if (account.Balance < 0)
+            {
+                message = "Kan inte dra ut minus belopp!";
+                return message;
+            }
+
+            account.Balance += balance;
+
+            return message;
+        }
     }
 }

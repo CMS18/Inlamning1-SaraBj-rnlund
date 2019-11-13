@@ -16,6 +16,7 @@ namespace ALM1.Controllers
             BankRepository repo = new BankRepository();
             HomeViewModel vm = new HomeViewModel();
             vm.GetCustomers = repo.GetAllCustomers();
+            var accountBalance = repo.Deposit(100101, 50);
             return View(vm);
         }
 

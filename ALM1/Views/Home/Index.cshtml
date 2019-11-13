@@ -1,5 +1,21 @@
-﻿@{ 
+﻿@model ALM1.Models.HomeViewModel
+
+@{
     ViewData["Title"] = "Saras BankApp";
 }
 
-@*<h1>Mitt namn är Sara</h1>*@
+<ul>
+    @foreach (var customer in Model.GetCustomers)
+    {
+        <li>
+            <p>Id: @customer.Id</p>
+            <p>Name: @customer.FirstName</p>
+            @foreach (var account in customer.Accounts)
+            {
+                <p>AccountID: @account.AccountId</p>
+                <p>Balance: @account.Balance</p>
+            }
+        </li>
+    }
+</ul>
+

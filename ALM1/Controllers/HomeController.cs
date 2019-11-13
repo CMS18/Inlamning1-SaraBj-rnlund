@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ALM1.Models;
 
+
 namespace ALM1.Controllers
 {
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return View();
+            BankRepository repo = new BankRepository();
+            HomeViewModel vm = new HomeViewModel();
+            vm.GetCustomers = repo.GetAllCustomers();
+            return View(vm);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,16 @@
+﻿<form asp-controller="Account" asp-action="Transfer" method="post">
+    <div>
+        <label>Från konto: </label><input type="text" name="fromAccount" />
+        <br />
+        <label>Till konto: </label><input type="text" name="toAccount" />
+        <br />
+        <label>Summa: </label><input type="text" name="amount" />
+    </div>
+    <button type="submit">Överför</button>
+</form>
+
+@if(TempData["result"] != null)
+{
+    <p>@TempData["result"]</p>
+}
+

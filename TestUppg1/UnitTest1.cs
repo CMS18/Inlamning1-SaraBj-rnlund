@@ -21,7 +21,8 @@ namespace TestUppg1
         {
             //Arrange
             var model = new BankRepository();
-            var account = model.Customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == 1);
+            var customers = model.GetAllCustomers();
+            var account = customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == 1);
             var balance = account.Balance;
 
             //Act
@@ -36,7 +37,8 @@ namespace TestUppg1
         {
             //Arrange
             var model = new BankRepository();
-            var account = model.Customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == 1);
+            var customers = model.GetAllCustomers();
+            var account = customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == 1);
             var balance = account.Balance;
 
             //Act
@@ -44,6 +46,34 @@ namespace TestUppg1
 
             //Asset
             Assert.AreEqual((balance - 50m), account.Balance);
+        }
+
+        [TestMethod]
+        public void TransferTest()
+        {
+            //Arrange
+            var bankRepo = new BankRepository();
+            var customers = bankRepo.GetAllCustomers();
+            var fromAccount = customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == 1);
+            var toAccount = customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == 2);
+            var method = new Account();
+            var expectedFrom = fromAccount.Balance;
+            var expectedTo = toAccount.Balance;
+
+            //Act
+            method.Transfer(fromAccount.AccountId, toAccount.AccountId, 100m);
+
+            //Assert
+            Assert.AreEqual((expectedFrom - 100m), fromAccount.Balance);
+            Assert.AreEqual((expectedTo + 100m), toAccount.Balance);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void PreventOverdrawInTransfer()
+        {
+            var model = new Account();
+            model.Transfer(1, 2, 53896765);
         }
     }
 }

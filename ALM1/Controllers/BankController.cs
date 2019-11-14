@@ -20,7 +20,8 @@ namespace ALM1.Controllers
         [HttpPost]
         public IActionResult Deposit(int accountId, decimal amount)
         {
-            var account = repo.Customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == accountId);
+            var customers = repo.GetAllCustomers();
+            var account = customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == accountId);
 
             if(account == null)
             {
@@ -44,7 +45,8 @@ namespace ALM1.Controllers
         [HttpPost]
         public IActionResult Withdrawl(int accountId, decimal amount)
         {
-            var account = repo.Customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == accountId);
+            var customers = repo.GetAllCustomers();
+            var account = customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == accountId);
 
             if (account == null)
             {

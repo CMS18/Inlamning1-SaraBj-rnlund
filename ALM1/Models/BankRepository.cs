@@ -65,7 +65,7 @@ namespace ALM1.Models
         public void Withdrawl(int accountId, decimal amount)
         {
             var account = Customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == accountId);
-            if (amount > account.Balance || amount < 0) throw new Exception();
+            if (amount > account.Balance || amount < 0) throw new ArgumentOutOfRangeException();
 
             account.Balance -= amount;
         }

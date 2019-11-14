@@ -7,7 +7,7 @@ namespace ALM1.Models
 {
     public class BankRepository
     {
-        private static List<Customer> Customers = new List<Customer>
+        public List<Customer> Customers = new List<Customer>
         {
             new Customer
             {
@@ -17,8 +17,8 @@ namespace ALM1.Models
                 {
                     new Account
                     {
-                        AccountId = 100101,
-                        Balance = 300000
+                        AccountId = 1,
+                        Balance = 300000m
                     }
                 }
             },
@@ -29,8 +29,8 @@ namespace ALM1.Models
                 Accounts = new List<Account>
                 {
                     new Account {
-                        AccountId = 100102,
-                        Balance = 400000
+                        AccountId = 2,
+                        Balance = 400000m
                     }
                 }
             },
@@ -42,8 +42,8 @@ namespace ALM1.Models
                 {
                     new Account
                     {
-                        AccountId = 100103,
-                        Balance = 500
+                        AccountId = 3,
+                        Balance = 500m
                     }
                 }
             },
@@ -52,6 +52,22 @@ namespace ALM1.Models
         public List<Customer> GetAllCustomers()
         {
             return Customers;
+        }
+
+        public void Deposit(int accountId, decimal amount)
+        {
+            if (amount < 0) throw new Exception();
+            var account = Customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == accountId);
+
+            account.Balance += amount;
+        }
+
+        public void Withdrawl(int accountId, decimal amount)
+        {
+            var account = Customers.SelectMany(c => c.Accounts).SingleOrDefault(a => a.AccountId == accountId);
+            if (amount > account.Balance || amount < 0) throw new ArgumentOutOfRangeException();
+
+            account.Balance -= amount;
         }
     }
 }

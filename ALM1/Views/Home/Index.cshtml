@@ -4,15 +4,17 @@
     ViewData["Title"] = "Saras BankApp";
 }
 
+<h1>Customer List</h1>
+
 <ul>
     @foreach (var customer in Model.GetCustomers)
     {
         <li>
-            <p>Id: @customer.Id</p>
+            <p>Customer ID: @customer.Id</p>
             <p>Name: @customer.FirstName</p>
             @foreach (var account in customer.Accounts)
             {
-                <p>AccountID: @account.AccountId</p>
+                <p>Account ID: @account.AccountId</p>
                 <p>Balance: @account.Balance:-</p>
             }
         </li>
